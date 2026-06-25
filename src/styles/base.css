@@ -1,0 +1,176 @@
+/* base.css
+   Grundlayout, Typografie, gemeinsame Bausteine (Buttons, Fokus, Kurskopf,
+   Modulübersicht). Komponentenspezifisches steht in components.css. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height);
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+/* Sichtbarer Fokus für alle interaktiven Elemente (WCAG). */
+:where(a, button, input, summary, [tabindex]):focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Skip-Link */
+.skip-link {
+  position: absolute;
+  left: var(--spacing-sm);
+  top: -3rem;
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  z-index: 10;
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: var(--spacing-sm); }
+
+.page {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--spacing-md) var(--spacing-2xl);
+}
+
+h1, h2, h3 { line-height: 1.25; }
+
+/* --- Kurskopf --- */
+.course__header { margin-bottom: var(--spacing-xl); }
+.course__eyebrow {
+  margin: 0 0 var(--spacing-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.course__title { margin: 0; font-size: var(--font-size-2xl); }
+.course__title:focus { outline: none; }
+.course__desc {
+  margin: var(--spacing-sm) 0 0;
+  color: var(--color-text-muted);
+  max-width: 48rem;
+}
+
+/* --- Modulübersicht (Kacheln) --- */
+.overview__title, .module__title { font-size: var(--font-size-xl); }
+.overview__title:focus, .module__title:focus, .module__head:focus { outline: none; }
+
+.tiles {
+  list-style: none;
+  margin: var(--spacing-md) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--spacing-md);
+  /* Passt sich automatisch an die Anzahl der Module an. */
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.tile:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.tile__link { text-decoration: none; color: inherit; }
+/* Ganze Kachel klickbar, ohne Semantik des Links zu verlieren. */
+.tile__link::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius-md); }
+.tile__title { font-size: var(--font-size-lg); font-weight: 600; color: var(--color-primary); }
+.tile__desc { margin: 0; color: var(--color-text-muted); }
+.tile__meta { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); align-items: center; }
+.tile__time { font-size: var(--font-size-sm); color: var(--color-text-muted); }
+.tile__count { font-size: var(--font-size-sm); color: var(--color-text-muted); margin-top: auto; }
+.tag {
+  font-size: var(--font-size-sm);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0 var(--spacing-sm);
+  color: var(--color-text-muted);
+}
+
+/* --- Modulansicht --- */
+.module__nav { margin-bottom: var(--spacing-md); }
+.backlink {
+  display: inline-block;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+.backlink:hover { text-decoration: underline; }
+.module__head { margin-bottom: var(--spacing-lg); }
+.module__title { margin: 0; }
+.module__desc { margin: var(--spacing-xs) 0 0; color: var(--color-text-muted); }
+.module__content { display: flex; flex-direction: column; gap: var(--spacing-xl); }
+
+/* --- Inhaltsblock (gemeinsamer Rahmen) --- */
+.block { }
+.block__heading { margin: 0 0 var(--spacing-sm); font-size: var(--font-size-lg); }
+.block__instructions { margin: 0 0 var(--spacing-md); color: var(--color-text-muted); }
+
+.prose { color: var(--color-text); }
+.prose p { margin: 0 0 var(--spacing-sm); }
+.prose ul, .prose ol { margin: 0 0 var(--spacing-sm); padding-left: 1.25rem; }
+.prose a { color: var(--color-primary); }
+.prose code {
+  background: var(--color-surface-alt);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+  font-size: 0.9em;
+}
+
+/* --- Buttons --- */
+.btn {
+  font: inherit;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.btn--primary { background: var(--color-primary); color: var(--color-primary-contrast); }
+.btn--primary:hover { background: var(--color-primary-hover); }
+.btn--ghost {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-border);
+}
+.btn--ghost:hover { background: var(--color-surface-alt); }
+
+/* --- Fehlerbox --- */
+.errorbox {
+  background: var(--color-error-bg);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  color: var(--color-text);
+}
+.errorbox__title { margin: 0 0 var(--spacing-sm); color: var(--color-error); }
+.errorbox__list { margin: var(--spacing-xs) 0 0; padding-left: 1.25rem; }
+
+/* Mobile Feinschliff */
+@media (max-width: 32rem) {
+  .page { padding: var(--spacing-md) var(--spacing-sm) var(--spacing-xl); }
+  .course__title { font-size: var(--font-size-xl); }
+}
+
+/* Bewegung reduzieren, wenn gewünscht. */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}

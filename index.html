@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Learning (Standalone)</title>
+    <meta
+      name="description"
+      content="Generisches, JSON-gesteuertes E-Learning-Frontend in reinem HTML/CSS/JavaScript."
+    />
+    <link rel="stylesheet" href="./src/styles/tokens.css" />
+    <link rel="stylesheet" href="./src/styles/base.css" />
+    <link rel="stylesheet" href="./src/styles/components.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#app">Zum Inhalt springen</a>
+    <main id="app" class="page">
+      <!-- Inhalt wird von render.js erzeugt. Sichtbarer Hinweis, falls JS aus
+           ist oder das Modul nicht lädt – die Seite bleibt nie leer. -->
+      <noscript>
+        <div class="errorbox" role="alert">
+          <h2 class="errorbox__title">JavaScript wird benötigt</h2>
+          <p>Dieses E-Learning lädt seine Inhalte per JavaScript. Bitte JavaScript aktivieren.</p>
+        </div>
+      </noscript>
+      <p id="boot-msg">E-Learning wird geladen …</p>
+    </main>
+    <script type="module" src="./src/render.js"></script>
+  </body>
+</html>

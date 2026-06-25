@@ -1,0 +1,201 @@
+{
+  "courseTitle": "Beispielkurs: Sichere Datenverarbeitung im Alltag",
+  "courseDescription": "Dummy-Inhalte zum Testen der Komponenten. Alle Texte und 'Daten' sind frei erfunden und enthalten keine echten personenbezogenen oder vertraulichen Informationen.",
+  "modules": [
+
+    {
+      "id": "modul-grundlagen-datenschutz",
+      "title": "Grundlagen des Datenschutzes",
+      "description": "Einführung in zentrale Begriffe und Prinzipien.",
+      "order": 1,
+      "estimatedMinutes": 15,
+      "thumbnailImage": "/assets/thumbs/grundlagen.jpg",
+      "tags": ["Pflichtmodul", "Einsteiger"],
+      "elements": [
+
+        {
+          "id": "el-1-text-intro",
+          "type": "text",
+          "heading": "Worum geht es in diesem Modul?",
+          "body": "In diesem Modul lernst du die wichtigsten Grundbegriffe rund um den Schutz von Daten kennen. Die Inhalte sind als Platzhalter zu verstehen und sollten vor dem produktiven Einsatz fachlich geprüft werden."
+        },
+
+        {
+          "id": "el-1-accordion-begriffe",
+          "type": "accordion",
+          "heading": "Wichtige Begriffe (FAQ)",
+          "panels": [
+            {
+              "id": "panel-1",
+              "title": "Was bedeutet 'personenbezogene Daten'?",
+              "content": "Platzhaltertext: Informationen, die sich auf eine identifizierbare Person beziehen.",
+              "defaultOpen": true
+            },
+            {
+              "id": "panel-2",
+              "title": "Was ist eine Einwilligung?",
+              "content": "Platzhaltertext: Die freiwillige, informierte Zustimmung zur Verarbeitung von Daten."
+            }
+          ]
+        },
+
+        {
+          "id": "el-1-quiz-kurz",
+          "type": "quiz",
+          "heading": "Kurzcheck",
+          "questions": [
+            {
+              "id": "q1",
+              "question": "Welche der folgenden Angaben zählt zu personenbezogenen Daten? (Platzhalterfrage)",
+              "allowMultiple": false,
+              "options": [
+                { "id": "q1-a", "label": "Eine fiktive Beispiel-Telefonnummer", "isCorrect": true },
+                { "id": "q1-b", "label": "Die Anzahl der Module in diesem Kurs", "isCorrect": false },
+                { "id": "q1-c", "label": "Der Name dieser JSON-Datei", "isCorrect": false }
+              ],
+              "explanation": "Platzhalter-Erklärung zur richtigen Antwort."
+            },
+            {
+              "id": "q2",
+              "question": "Zweite Platzhalterfrage: Mehrfachauswahl möglich.",
+              "allowMultiple": true,
+              "options": [
+                { "id": "q2-a", "label": "Option A", "isCorrect": true },
+                { "id": "q2-b", "label": "Option B", "isCorrect": true },
+                { "id": "q2-c", "label": "Option C", "isCorrect": false }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "modul-praxisbeispiele",
+      "title": "Praxisbeispiele & Übungen",
+      "description": "Interaktive Übungen zur Vertiefung.",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "thumbnailImage": "/assets/thumbs/praxis.jpg",
+      "tags": ["Vertiefung"],
+      "elements": [
+
+        {
+          "id": "el-2-media-intro",
+          "type": "media",
+          "mediaType": "video",
+          "heading": "Einführungsvideo (Platzhalter)",
+          "src": "/assets/videos/platzhalter-intro.mp4",
+          "captionTrack": "/assets/videos/platzhalter-intro.vtt",
+          "transcript": "Platzhalter-Transkript des Einführungsvideos."
+        },
+
+        {
+          "id": "el-2-image-diagramme",
+          "type": "image",
+          "heading": "Beispieldiagramme",
+          "images": [
+            { "id": "img-1", "src": "/assets/images/diagramm-1.png", "alt": "Diagramm 1", "caption": "Platzhalter: Datenfluss-Übersicht Variante A" },
+            { "id": "img-2", "src": "/assets/images/diagramm-2.png", "alt": "Diagramm 2", "caption": "Platzhalter: Datenfluss-Übersicht Variante B" },
+            { "id": "img-3", "src": "/assets/images/diagramm-3.png", "alt": "Diagramm 3", "caption": "Platzhalter: Datenfluss-Übersicht Variante C" }
+          ]
+        },
+
+        {
+          "id": "el-2-dragdrop-zuordnung",
+          "type": "dragdrop",
+          "heading": "Ordne die Begriffe richtig zu",
+          "instructions": "Platzhalter-Übung: Ziehe jeden Begriff in die passende Kategorie.",
+          "items": [
+            { "id": "item-1", "label": "Beispielbegriff 1", "targetZoneId": "zone-a" },
+            { "id": "item-2", "label": "Beispielbegriff 2", "targetZoneId": "zone-b" },
+            { "id": "item-3", "label": "Beispielbegriff 3", "targetZoneId": "zone-a" },
+            { "id": "item-4", "label": "Beispielbegriff 4", "targetZoneId": "zone-c" }
+          ],
+          "targetZones": [
+            { "id": "zone-a", "label": "Kategorie A" },
+            { "id": "zone-b", "label": "Kategorie B" },
+            { "id": "zone-c", "label": "Kategorie C" }
+          ]
+        },
+
+        {
+          "id": "el-2-slider-selbsteinschaetzung",
+          "type": "slider",
+          "heading": "Selbsteinschätzung (Platzhalter)",
+          "instructions": "Bewerte folgende Aussagen auf einer Skala.",
+          "scales": [
+            { "id": "scale-1", "label": "Ich fühle mich beim Thema sicher.", "min": 1, "max": 5, "step": 1, "minLabel": "Gar nicht", "maxLabel": "Sehr sicher", "defaultValue": 3 },
+            { "id": "scale-2", "label": "Ich kann das Gelernte im Alltag anwenden.", "min": 1, "max": 5, "step": 1, "minLabel": "Gar nicht", "maxLabel": "Sehr gut", "defaultValue": 3 }
+          ]
+        },
+
+        {
+          "id": "el-2-flipcards-begriffe",
+          "type": "flipcards",
+          "heading": "Karteikarten zum Wiederholen",
+          "cards": [
+            { "id": "card-1", "front": "Begriff A", "back": "Platzhalter-Definition von Begriff A" },
+            { "id": "card-2", "front": "Begriff B", "back": "Platzhalter-Definition von Begriff B" },
+            { "id": "card-3", "front": "Begriff C", "back": "Platzhalter-Definition von Begriff C" },
+            { "id": "card-4", "front": "Begriff D", "back": "Platzhalter-Definition von Begriff D" },
+            { "id": "card-5", "front": "Begriff E", "back": "Platzhalter-Definition von Begriff E" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "modul-vertiefung-und-test",
+      "title": "Vertiefung & Abschlusstest",
+      "description": "Größerer Accordion-Bereich und umfangreicherer Quiz zum Abschluss.",
+      "order": 3,
+      "estimatedMinutes": 20,
+      "thumbnailImage": "/assets/thumbs/vertiefung.jpg",
+      "tags": ["Pflichtmodul", "Abschluss"],
+      "elements": [
+
+        {
+          "id": "el-3-accordion-vertiefung",
+          "type": "accordion",
+          "heading": "Vertiefende Fragen (deutlich mehr Panels als in Modul 1)",
+          "panels": [
+            { "id": "v-panel-1", "title": "Frage 1 (Platzhalter)", "content": "Platzhaltertext 1" },
+            { "id": "v-panel-2", "title": "Frage 2 (Platzhalter)", "content": "Platzhaltertext 2" },
+            { "id": "v-panel-3", "title": "Frage 3 (Platzhalter)", "content": "Platzhaltertext 3" },
+            { "id": "v-panel-4", "title": "Frage 4 (Platzhalter)", "content": "Platzhaltertext 4" },
+            { "id": "v-panel-5", "title": "Frage 5 (Platzhalter)", "content": "Platzhaltertext 5" }
+          ]
+        },
+
+        {
+          "id": "el-3-quiz-abschluss",
+          "type": "quiz",
+          "heading": "Abschlusstest (mehr Fragen als der Kurzcheck)",
+          "questions": [
+            { "id": "f1", "question": "Abschlussfrage 1 (Platzhalter)", "options": [
+              { "id": "f1-a", "label": "Antwort A", "isCorrect": false },
+              { "id": "f1-b", "label": "Antwort B", "isCorrect": true }
+            ]},
+            { "id": "f2", "question": "Abschlussfrage 2 (Platzhalter)", "options": [
+              { "id": "f2-a", "label": "Antwort A", "isCorrect": true },
+              { "id": "f2-b", "label": "Antwort B", "isCorrect": false },
+              { "id": "f2-c", "label": "Antwort C", "isCorrect": false }
+            ]},
+            { "id": "f3", "question": "Abschlussfrage 3 (Platzhalter)", "options": [
+              { "id": "f3-a", "label": "Antwort A", "isCorrect": false },
+              { "id": "f3-b", "label": "Antwort B", "isCorrect": false },
+              { "id": "f3-c", "label": "Antwort C", "isCorrect": true },
+              { "id": "f3-d", "label": "Antwort D", "isCorrect": false }
+            ]},
+            { "id": "f4", "question": "Abschlussfrage 4 (Platzhalter, Mehrfachauswahl)", "allowMultiple": true, "options": [
+              { "id": "f4-a", "label": "Antwort A", "isCorrect": true },
+              { "id": "f4-b", "label": "Antwort B", "isCorrect": true },
+              { "id": "f4-c", "label": "Antwort C", "isCorrect": false }
+            ]}
+          ]
+        }
+      ]
+    }
+  ]
+}

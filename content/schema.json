@@ -1,0 +1,319 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "E-Learning Content Schema",
+  "description": "Trennt Inhalt (diese Datei beschreibt die Struktur) von Design. Jede Komponente im Frontend rendert sich generisch aus den Arrays hier - die Anzahl der Einträge bestimmt automatisch, wie viele Accordion-Panels, Quiz-Fragen, Slides etc. angezeigt werden. Es muss nirgendwo im Code eine feste Zahl von Elementen vorkommen.",
+  "type": "object",
+  "required": ["courseTitle", "modules"],
+  "properties": {
+    "courseTitle": {
+      "type": "string",
+      "description": "Übergeordneter Titel des gesamten E-Learning-Angebots."
+    },
+    "courseDescription": {
+      "type": "string"
+    },
+    "modules": {
+      "type": "array",
+      "description": "Liste unabhängiger Module zur freien Auswahl. Die Modulübersicht (Kachel-Grid o.ä.) rendert sich automatisch aus der Länge dieses Arrays.",
+      "items": { "$ref": "#/definitions/module" }
+    }
+  },
+  "definitions": {
+
+    "module": {
+      "type": "object",
+      "required": ["id", "title", "order", "elements"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Eindeutige, stabile ID (z.B. 'modul-datenschutz-grundlagen'). Wird für Routing, Fortschritts-Tracking und spätere Backend-Referenzen genutzt."
+        },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "order": {
+          "type": "integer",
+          "description": "Sortierreihenfolge der Module in der Übersicht."
+        },
+        "estimatedMinutes": { "type": "integer" },
+        "thumbnailImage": {
+          "type": "string",
+          "description": "Pfad/URL zu einem Vorschaubild. Bewusst nur eine Referenz, kein eingebettetes Bild - Design entscheidet, wie/ob es angezeigt wird."
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "elements": {
+          "type": "array",
+          "description": "Geordnete Liste der Inhaltsblöcke innerhalb des Moduls. Jedes Element hat ein 'type'-Feld, das die zuständige Komponente im Frontend bestimmt (z.B. type:'accordion' -> Accordion-Komponente). Die Reihenfolge im Array ist die Anzeigereihenfolge.",
+          "items": {
+            "oneOf": [
+              { "$ref": "#/definitions/elementText" },
+              { "$ref": "#/definitions/elementAccordion" },
+              { "$ref": "#/definitions/elementQuiz" },
+              { "$ref": "#/definitions/elementMedia" },
+              { "$ref": "#/definitions/elementImage" },
+              { "$ref": "#/definitions/elementDragDrop" },
+              { "$ref": "#/definitions/elementSlider" },
+              { "$ref": "#/definitions/elementFlipcards" }
+            ]
+          }
+        }
+      }
+    },
+
+    "elementBase": {
+      "type": "object",
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" }
+      }
+    },
+
+    "elementText": {
+      "allOf": [
+        { "$ref": "#/definitions/elementBase" },
+        {
+          "properties": {
+            "type": { "const": "text" },
+            "heading": { "type": "string" },
+            "body": {
+              "type": "string",
+              "description": "Markdown-fähiger Fließtext. Kein HTML/Styling hier - das übernimmt das Template."
+            }
+          },
+          "required": ["body"]
+        }
+      ]
+    },
+
+    "elementAccordion": {
+      "allOf": [
+        { "$ref": "#/definitions/elementBase" },
+        {
+          "properties": {
+            "type": { "const": "accordion" },
+            "heading": { "type": "string" },
+            "panels": {
+              "type": "array",
+              "description": "Beliebig viele Panels. Die Accordion-Komponente muss panels.length verwenden, niemals eine feste Anzahl annehmen.",
+              "items": {
+                "type": "object",
+                "required": ["id", "title", "content"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "title": { "type": "string" },
+                  "content": { "type": "string" },
+                  "defaultOpen": { "type": "boolean", "default": false }
+                }
+              }
+            }
+          },
+          "required": ["panels"]
+        }
+      ]
+    },
+
+    "elementQuiz": {
+      "allOf": [
+        { "$ref": "#/definitions/elementBase" },
+        {
+          "properties": {
+            "type": { "const": "quiz" },
+            "heading": { "type": "string" },
+            "questions": {
+              "type": "array",
+              "description": "Beliebig viele Fragen. Jede Frage hat beliebig viele Antwortoptionen.",
+              "items": {
+                "type": "object",
+                "required": ["id", "question", "options"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "question": { "type": "string" },
+                  "allowMultiple": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "true = Mehrfachauswahl möglich, false = nur eine richtige Antwort wählbar."
+                  },
+                  "options": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["id", "label", "isCorrect"],
+                      "properties": {
+                        "id": { "type": "string" },
+                        "label": { "type": "string" },
+                        "isCorrect": { "type": "boolean" }
+                      }
+                    }
+                  },
+                  "explanation": {
+                    "type": "string",
+                    "description": "Optionale Erklärung, die nach Beantwortung angezeigt wird."
+                  }
+                }
+              }
+            }
+          },
+          "required": ["questions"]
+        }
+      ]
+    },
+
+    "elementMedia": {
+      "allOf": [
+        { "$ref": "#/definitions/elementBase" },
+        {
+          "properties": {
+            "type": { "const": "media" },
+            "mediaType": { "type": "string", "enum": ["video", "audio"] },
+            "heading": { "type": "string" },
+            "src": {
+              "type": "string",
+              "description": "URL oder Pfad zur Mediendatei. Kann später durch eine sichere/signierte URL ersetzt werden, ohne die Struktur zu ändern."
+            },
+            "captionTrack": {
+              "type": "string",
+              "description": "Optionale Pfad-Referenz zu Untertiteln (z.B. .vtt-Datei)."
+            },
+            "transcript": { "type": "string" }
+          },
+          "required": ["mediaType", "src"]
+        }
+      ]
+    },
+
+    "elementImage": {
+      "allOf": [
+        { "$ref": "#/definitions/elementBase" },
+        {
+          "properties": {
+            "type": { "const": "image" },
+            "heading": { "type": "string" },
+            "images": {
+              "type": "array",
+              "description": "Beliebig viele Bilder mit Beschriftung (z.B. für eine Galerie oder Diagramm-Reihe).",
+              "items": {
+                "type": "object",
+                "required": ["id", "src", "caption"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "src": { "type": "string" },
+                  "alt": { "type": "string" },
+                  "caption": { "type": "string" }
+                }
+              }
+            }
+          },
+          "required": ["images"]
+        }
+      ]
+    },
+
+    "elementDragDrop": {
+      "allOf": [
+        { "$ref": "#/definitions/elementBase" },
+        {
+          "properties": {
+            "type": { "const": "dragdrop" },
+            "heading": { "type": "string" },
+            "instructions": { "type": "string" },
+            "items": {
+              "type": "array",
+              "description": "Beliebig viele ziehbare Elemente.",
+              "items": {
+                "type": "object",
+                "required": ["id", "label", "targetZoneId"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "label": { "type": "string" },
+                  "targetZoneId": {
+                    "type": "string",
+                    "description": "Verweist auf die id einer passenden Zone in 'targetZones' - so weiß die Komponente, welche Zuordnung korrekt ist."
+                  }
+                }
+              }
+            },
+            "targetZones": {
+              "type": "array",
+              "description": "Beliebig viele Ablagezonen, auf die die Items gezogen werden.",
+              "items": {
+                "type": "object",
+                "required": ["id", "label"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "label": { "type": "string" }
+                }
+              }
+            }
+          },
+          "required": ["items", "targetZones"]
+        }
+      ]
+    },
+
+    "elementSlider": {
+      "allOf": [
+        { "$ref": "#/definitions/elementBase" },
+        {
+          "properties": {
+            "type": { "const": "slider" },
+            "heading": { "type": "string" },
+            "instructions": { "type": "string" },
+            "scales": {
+              "type": "array",
+              "description": "Beliebig viele Schieberegler-Bewertungen (z.B. mehrere Aussagen, die jeweils auf einer Skala bewertet werden).",
+              "items": {
+                "type": "object",
+                "required": ["id", "label", "min", "max"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "label": { "type": "string" },
+                  "min": { "type": "number" },
+                  "max": { "type": "number" },
+                  "step": { "type": "number", "default": 1 },
+                  "minLabel": { "type": "string" },
+                  "maxLabel": { "type": "string" },
+                  "defaultValue": { "type": "number" }
+                }
+              }
+            }
+          },
+          "required": ["scales"]
+        }
+      ]
+    },
+
+    "elementFlipcards": {
+      "allOf": [
+        { "$ref": "#/definitions/elementBase" },
+        {
+          "properties": {
+            "type": { "const": "flipcards" },
+            "heading": { "type": "string" },
+            "cards": {
+              "type": "array",
+              "description": "Beliebig viele Karteikarten. Layout/Grid muss sich an cards.length anpassen.",
+              "items": {
+                "type": "object",
+                "required": ["id", "front", "back"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "front": { "type": "string" },
+                  "back": { "type": "string" },
+                  "image": { "type": "string" }
+                }
+              }
+            }
+          },
+          "required": ["cards"]
+        }
+      ]
+    },
+
+    "_sensitiveDataNote": {
+      "description": "PLATZHALTER-KONVENTION: Felder für personenbezogene/sensible Daten (z.B. Nutzername, Fortschritt, Quiz-Ergebnisse, Zertifikatsdaten) sind bewusst NICHT Teil dieses Content-Schemas. Sie gehören in ein separates 'userState'-Objekt (z.B. userState.json oder API-Response), das zur Laufzeit dazugeladen wird - niemals fest in die Content-JSON geschrieben. So bleibt content.json immer unkritisch und teilbar/versionierbar (z.B. in Git), während userState aus einer geschützten Quelle kommt."
+    }
+  }
+}
